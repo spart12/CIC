@@ -1,5 +1,5 @@
 # Casino Game
-This project has the purpose of simulating(to simulate) the famous card game Casino
+The purpose of this project is to simulate the famous card game Casino.
 The card game Casino is an entertaining game played with two to four players. Score points by winning specific cards and by winning the most cards.
 ## Table of content
 * [Objective](#objective)
