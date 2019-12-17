@@ -19,15 +19,13 @@ Four cards are dealt to each player. Once the players have played all four cards
 During game play, the players will try to take in as many cards as they can in order to win as many points as they can. 
 When a combination is built, players can continue to build up the combination.
 ### Moves
-#### Build
-This move is created when a card from a player’s hand is combined with a card in the middle. This can only be done if the combined total equals the value of a card in that player’s hand.
-#### Call
-It's combining cards with an equal value. This can only be done if the player has a card of equal value in still in his hand.
-#### Take
-Cards can be taken by pairing a card from your hand to a card that is in the middle. Multiple cards from the middle can be added together and taken by a card that equals their total value. 
-For example, a 7 from a player’s hand can take a 3 and 4 from the middle.
-#### Drop
-It's means placing a card from his/her hand into the middle.
+|Moves   |Description|
+|------| -------|
+|Build|This move is created when a card from a player’s hand is combined with a card in the middle. This can only be done if the combined total equals the value of a card in that player’s hand.|
+|Call|It's combining cards with an equal value. This can only be done if the player has a card of equal value in still in his hand.|
+|Take| Cards can be taken by pairing a card from your hand to a card that is in the middle. Multiple cards from the middle can be added together and taken by a card that equals their total value. 
+For example, a 7 from a player’s hand can take a 3 and 4 from the middle.|
+|Drop| It's means placing a card from his/her hand into the middle.|
 ### Scoring
 Players review the cards collected at the end and score as follows:
 
