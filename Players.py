@@ -32,7 +32,7 @@ class Players:
             self.Name_valid()
 
     def input_valid(self, element):
-        if element != '':
+        if element.isalnum():
             return True
         else:
             return False

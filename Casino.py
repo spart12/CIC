@@ -53,13 +53,15 @@ class Casino:
             self.dealer.deal()
             self.Game()
         else:
+            # Add the all remaining cards from the table to the player who took cards last
             if self.table != []:
                 for player in self.players.players:
-                    if player.move.lower() == 'take':
+                    if player.move == 'take':
                         for each in self.table:
                             player.deck.append(each)
-            
+            # Count the points
             Halftime(self.players.players)
+            # Check if is necesary another round
             one_more = True
             for player in self.players.players:
                 if player.score >= 21:
