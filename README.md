@@ -6,6 +6,7 @@ The card game Casino is an entertaining game played with two to four players. Sc
 * [Objective](#objective)
 * [How to play](#how-to-play)
 * [Rules](#rules)
+* [About this program](#about-this-program)
 
 ## Objective
 The object of the game is to score points by winning specific cards and by winning the most cards. There are 11 possible points to earn each round. 
@@ -50,5 +51,18 @@ A game is played to 21 points.
 * A call combinations remain at the initial value and cannot be raised by any player. 
 
 * A player that created a combination cannot trail a card on his next turn if the combination created has not been changed.
+## About this program
+### Version
+Python 3.8.0
+### Run file
+Casino.py
+### Game excceptions
+#### Specials cards value
+|Special card|Value|
+|  -----  |  -----  |
+|A|1|
+|J|11|
+|Q|12|
+|K|13|
 ## References
 https://gathertogethergames.com/casino
