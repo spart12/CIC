@@ -9,4 +9,3 @@ class Dealer:
             self.nt = self.deck[-2:]
             player.hand += self.nt
             del self.deck[-2:]
-    
