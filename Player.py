@@ -165,18 +165,23 @@ class Player:
 
 #/////////////Moves validation functions //////////////////////////////////////////////////////////////////////////
 
+# You could create as function that handles the sum and just call it instead of doing the same thing over and over
+
     def Take_valid(self):
+        # You can wrap this into a function ..
         if self.action2 == '1':
             if type(self.table[self.position_table]) == list:
                 suma = 0
                 for each in self.table[self.position_table]:
                     each = self.Specials_cards(each[:-1])
                     suma += each
+                # long condition, you can wrap it into a function as well
                 if suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.Specials_cards(self.hand[self.position_player_hand][:-1]), suma):
                     self.valid = True
             else:
                 if self.hand[self.position_player_hand][:-1] == self.table[self.position_table][:-1]:
                     self.valid = True
+        # ..
         else:
             suma = 0
             for e in self.position_table:

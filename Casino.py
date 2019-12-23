@@ -43,6 +43,7 @@ class Casino:
                 table = 'Cards in table: ' + str(self.table)
                 input(player.name + '\'s turn \nPress Enter to view your hand ')
                 clear()
+                # You can put these into one and just add a newline \n
                 print(table)
                 print('\n' + player.name + '\'s hand: ' + str(player.hand) + '\n')
 
@@ -77,8 +78,7 @@ class Casino:
         for player in self.players.players:
             message = player.name + str(player.score)
             if player.score >= 21:
-                print(message + ' WINNER!!!')
-            else:
-                print(message)
+                message += ' WINNER!!!'
+            print(message)
 
 game = Casino()
