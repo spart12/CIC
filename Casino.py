@@ -75,6 +75,10 @@ class Casino:
 
     def end(self):
         for player in self.players.players:
-            print(player.name + str(player.score))
+            message = player.name + str(player.score)
+            if player.score >= 21:
+                print(message + ' WINNER!!!')
+            else:
+                print(message)
 
 game = Casino()

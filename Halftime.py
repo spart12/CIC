@@ -8,7 +8,7 @@ class Halftime:
 
     def biggest_deck(self):
         self.biggest = ['', 0]
-        for player in self.players.players:
+        for player in self.players:
             if player.deck >= self.biggest[1]:
                 if player.deck == self.biggest[1]:
                     return None
