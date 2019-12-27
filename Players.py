@@ -32,7 +32,4 @@ class Players:
             self.Name_valid()
 
     def input_valid(self, element):
-        if element.isnumeric():
-            return True
-        else:
-            return False
+        return element.isnumeric():

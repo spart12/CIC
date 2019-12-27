@@ -44,114 +44,62 @@ class Player:
 
     def Take_move(self):
         self.action2 = input('Enter "1" if you wanna take one card from the table \n"2" for more than one\n')
-        if self.action2 == '1':
-            self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
-            self.position_table = int(input('Card position from the table (e.g.: 2): ')) - 1
-            if self.check_index():
-                if self.cards_valid():
-                    # Add selected cards to  player's deck
-                    self.deck += [self.hand[self.position_player_hand], self.table[self.position_table]]
-                    # Delete those cards
-                    self.table.pop(self.position_table)
-                    self.hand.pop(self.position_player_hand)
-
-                else:
-                    print('\n\nInvalid move \n Try again\n\n')
-                    self.Move(self.table)
-            else:
-                print('\nPosition out of range\nTry again\n')
-                self.Take_move()
-        elif self.action2 == '2':
-            self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
-            self.position_table = input('Cards position from the table, separates by commas (e.g.: 2,3,4): ').split(',')
-            if self.check_index():
-                if self.cards_valid():
-                    for position_table in self.position_table:
-                        self.deck.append(self.table[int(position_table) - 1])
-                    self.deck.append(self.hand[self.position_player_hand])
-
-                    for i, position_table in enumerate(self.position_table):
-                        self.table.pop(int(position_table) - (i + 1))
-
-                    self.hand.pop(self.position_player_hand)
-
-                else:
-                    print('\n\nInvalid move \n Try again\n\n')
-                    self.Move(self.table)
-            else:
-                print('\nPosition out of range\nTry again\n')
-                self.Take_move()
-        else:
-            print('\nTry again\n')
-            self.Take_move()
-
-    def Call_move(self):
-        self.position_player_hand = int(input('Card position from your hand ( e.g.: 2): ')) - 1
-        self.position_table = int(input('Card position from the table ( e.g.: 2): ')) - 1
-        if self.check_index():
-            if self.cards_valid():
-                #Create a group for easier adding
-                self.group = [self.hand[self.position_player_hand], self.table[self.position_table]]
+        self.func_position()
+        if self.func_aux_move_valid():
+            if self.action2 == '1'
+                # Add selected cards to  player's deck
+                self.deck += [self.hand[self.position_player_hand], self.table[self.position_table]]
+                # Delete those cards
                 self.table.pop(self.position_table)
-                self.table.insert(self.position_table, self.group)
                 self.hand.pop(self.position_player_hand)
 
-            else:
-                print('\n\nInvalid move \n Try again\n\n')
-                self.Move(self.table)
-        else:
-            print('\nPosition out of range\nTry again\n')
-            self.Call_move()
+            elif self.action2 == '2':
+                for position_table in self.position_table:
+                    self.deck.append(self.table[int(position_table) - 1])
+                    self.deck.append(self.hand[self.position_player_hand])
+
+                for i, position_table in enumerate(self.position_table):
+                    self.table.pop(int(position_table) - (i + 1))
+
+                self.hand.pop(self.position_player_hand)
+
+    def Call_move(self):
+        self.action2 = '1'
+        self.func_position()
+        if self.func_aux_move_valid()
+            #Create a group for easier adding
+            self.group = [self.hand[self.position_player_hand], self.table[self.position_table]]
+            self.table.pop(self.position_table)
+            self.table.insert(self.position_table, self.group)
+            self.hand.pop(self.position_player_hand)
 
     def Build_move(self):
         self.action2 = input('Enter "1" if you wanna build with one card from the table \n"2" for more than one\n')
-        if self.action2 == '1':
-            self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
-            self.position_table = int(input('Card position from the table (e.g.: 2): ')) - 1
-            if self.check_index():
-                if self.cards_valid():
-                    if type(self.table[self.position_table]) == list:
-                        self.group = [self.hand[self.position_player_hand]]
-                        for e in self.table[self.position_table]:
-                            self.group += [e]
-                    else:
-                        self.group = [self.hand[self.position_player_hand]] + [self.table[self.position_table]]
-                    self.table.pop(self.position_table)
-                    self.table.insert(self.position_table, self.group) 
-                    self.hand.pop(self.position_player_hand)
-
+        self.func_position()
+        if self.func_aux_move_valid():
+            if self.action2 == '1':
+                if type(self.table[self.position_table]) == list:
+                    self.group = [self.hand[self.position_player_hand]]
+                    for e in self.table[self.position_table]:
+                        self.group += [e]
                 else:
-                    print('\n\nInvalid move \n Try again\n\n')
-                    self.Move(self.table)
-            else:
-                print('\nPosition out of range\nTry again\n')
-                self.Build_move()
+                    self.group = [self.hand[self.position_player_hand]] + [self.table[self.position_table]]
+                self.table.pop(self.position_table)
+                self.table.insert(self.position_table, self.group) 
+                self.hand.pop(self.position_player_hand)
 
-        elif self.action2 == '2':
-            self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
-            self.position_table = input('Cards position from the table, separates by commas (e.g.: 2,3,4): ').split(',')
-            if self.check_index():
-                if self.cards_valid():
-                    self.group = []
-                    for position_table in self.position_table:
-                        self.group += [self.table[int(position_table) - 1]]
-                    
-                    for i, position in enumerate(self.position_table):
-                        self.table.pop(int(position_table) - (i + 1))
 
-                    self.group += [self.hand[self.position_player_hand]]
-                    self.table.insert(int(self.position_table[0]) - 1, self.group)
-                    self.hand.pop(self.position_player_hand)
+            elif self.action2 == '2':
+                self.group = []
+                for position_table in self.position_table:
+                    self.group += [self.table[int(position_table) - 1]]
+                
+                for i, position in enumerate(self.position_table):
+                    self.table.pop(int(position_table) - (i + 1))
 
-                else:
-                    print('\n\nInvalid move \n Try again\n\n')
-                    self.Move(self.table)
-            else:
-                print('\nPosition out of range\nTry again\n')
-                self.Build_move()
-        else:
-            print('\nTry again\n')
-            self.Build_move()
+                self.group += [self.hand[self.position_player_hand]]
+                self.table.insert(int(self.position_table[0]) - 1, self.group)
+                self.hand.pop(self.position_player_hand)
 
     def cards_valid(self):
         self.valid = False
@@ -168,11 +116,8 @@ class Player:
     def Take_valid(self):
         if self.action2 == '1':
             if type(self.table[self.position_table]) == list:
-                suma = 0
-                for each in self.table[self.position_table]:
-                    each = self.Specials_cards(each[:-1])
-                    suma += each
-                if suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.Specials_cards(self.hand[self.position_player_hand][:-1]), suma):
+                self.func_sum(self.table[self.position_table])
+                if self.suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.Specials_cards(self.hand[self.position_player_hand][:-1]), suma):
                     self.valid = True
             else:
                 if self.hand[self.position_player_hand][:-1] == self.table[self.position_table][:-1]:
@@ -182,11 +127,9 @@ class Player:
             for e in self.position_table:
                 e = int(e) - 1
                 if type(self.table[e]) == list:
-                    for each in self.table[e]:
-                        suma += int(each[:-1])
+                    self.func_sum(self.table[e])
                 else:
-                    if self.table[e][:-1] != self.hand[self.position_player_hand][:-1]:
-                        suma += self.Specials_cards(self.table[e][:-1])
+                    suma += self.Specials_cards(self.table[e][:-1])
             if suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.hand[self.position_player_hand][:-1], suma):
                 self.valid = True
                 
@@ -197,11 +140,9 @@ class Player:
 
     def Build_valid(self):
         if self.action2 == '1':
-            suma = 0
             if type(self.table[self.position_table]) == list:
-                for e in self.table[self.position_table]:
-                    suma += self.Specials_cards(e[:-1])
-                suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
+                self.func_sum(self.table[self.position_table])
+                self.suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
             else:
                 suma = self.Specials_cards(self.hand[self.position_player_hand][:-1]) + self.Specials_cards(self.table[self.position_table][:-1])
             for e in self.hand:
@@ -210,7 +151,8 @@ class Player:
         else:
             suma = 0
             for e in self.position_table:
-                suma += self.Specials_cards(self.table[int(e)-1][:-1])
+                if type(e) != list:
+                    suma += self.Specials_cards(self.table[int(e)-1][:-1])
             suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
 
             for e in self.hand:
@@ -238,7 +180,33 @@ class Player:
             return int(card)
 
     def Multiples(self, card, total):
-        card_multiple = [card*2, card*3, card*4]
+        card_multiple = [card * 2, card * 3, card * 4]
         for e in card_multiple:
             if total == e:
                 return True
+
+    def func_sum(self, lst):
+        self.suma = 0
+        for e in lst:
+            self.suma += self.Specials_cards(e[:-1])
+
+    def func_position(self):
+        if self.action2 == '1':
+            self.position_table = int(input('Card position from the table (e.g.: 2): ')) - 1
+        elif self.action2 == '2':
+            self.position_table = input('Cards position from the table, separates by commas (e.g.: 2,3,4): ').split(',')
+        else:
+            print('\nTry again\n')
+            self.func_moves()
+        self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
+
+    def func_aux_move_valid(self):
+        if self.check_index():
+            if self.cards_valid():
+                return True
+            else:
+                print('\n\nInvalid move \n Try again\n\n')
+                self.func_moves()
+        else:
+            print('\nPosition out of range\nTry again\n')
+            self.func_moves()
