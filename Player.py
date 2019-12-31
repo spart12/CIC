@@ -46,7 +46,7 @@ class Player:
         self.action2 = input('Enter "1" if you wanna take one card from the table \n"2" for more than one\n')
         self.func_position()
         if self.func_aux_move_valid():
-            if self.action2 == '1'
+            if self.action2 == '1':
                 # Add selected cards to  player's deck
                 self.deck += [self.hand[self.position_player_hand], self.table[self.position_table]]
                 # Delete those cards
@@ -66,7 +66,7 @@ class Player:
     def Call_move(self):
         self.action2 = '1'
         self.func_position()
-        if self.func_aux_move_valid()
+        if self.func_aux_move_valid():
             #Create a group for easier adding
             self.group = [self.hand[self.position_player_hand], self.table[self.position_table]]
             self.table.pop(self.position_table)

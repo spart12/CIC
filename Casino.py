@@ -13,7 +13,6 @@ def clear():
         
 from Poker_Cards import Poker_cards
 from Halftime import Halftime
-from Players import Players
 from Player import Player
 from Dealear import Dealer
 
@@ -23,11 +22,42 @@ class Casino:
         self.Welcome = 'Welcome to Casino Game'
         input(self.Welcome.center(125, '-') + '\n \nPress Enter to continue :) ')
         self.deck = Poker_cards()
-        self.players = Players()
+        self.players = self.play()
         self.dealer = Dealer(self.deck.poker, self.players.players)
         self.table = []
         self.table_set_up()
         self.Game()
+
+    def play(self):
+        self.cant_players = input('\nEnter the number of Players: ')
+        players = []
+        if self.input_valid(self.cant_players):
+            if int(self.cant_players) >= 2 and int(self.cant_players) <= 4:
+                i = 1
+                while i <= int(self.cant_players):
+                    print('\nPlayer ' + str(i))
+                    player_name = self.Name_valid()
+                    player_name = Player(player_name)
+                    players.append(player_name)
+                    i += 1
+                return players
+            else:
+                print('\nInvalid value \nValid numbers (2-4)')
+                self.play()
+        else:
+            print('\nInvalid input\nTry again')
+            self.play()
+
+    def Name_valid(self):
+        self.name = input('Enter your name: ')
+        if self.name.isalpha():
+            return self.name.capitalize()
+        else:
+            print('\nInvalid name\nTry again\n')
+            self.Name_valid()
+
+    def input_valid(self, element):
+        return element.isnumeric()
 
     def table_set_up(self):
         while len(self.table) < 4:
@@ -63,7 +93,7 @@ class Casino:
         for player in self.players.players:
             message = player.name + str(player.score)
             if player == winner:
-                message += ' WINNER!!!')
+                message += ' WINNER!!!'
             print(message)
 
     def Remaining_cards(self):
