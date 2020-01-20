@@ -63,7 +63,7 @@ class Casino:
         for player in self.players.players:
             message = player.name + str(player.score)
             if player == winner:
-                message += ' WINNER!!!')
+                message += ' WINNER!!!'
             print(message)
 
     def Remaining_cards(self):
