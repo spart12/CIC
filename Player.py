@@ -34,13 +34,16 @@ class Player:
 
 #/////////////Moves' functions ////////////////////////////////////////////////////////////////////////////////
     def Drop_move(self):
-        self.position_player_hand = int(input('Enter the card position that you wanna drop (e.g.: 2): ')) - 1
-        if self.check_index():
-            self.table.append(self.hand[self.position_player_hand])
-            self.hand.pop(self.position_player_hand)
-        else:
-            print('\nPosition out of range\nTry again\n')
-            self.Drop_move()
+        input = input('Enter the card position that you wanna drop (e.g.: 2): ')
+        aux_position = self.Isnumeric(input)
+        if aux_position:
+            self.position_player_hand = aux_position
+            if self.check_index():
+                self.table.append(self.hand[self.position_player_hand])
+                self.hand.pop(self.position_player_hand)
+            else:
+                print('\nPosition out of range\nTry again\n')
+                self.Drop_move()
 
     def Take_move(self):
         self.action2 = input('Enter "1" if you wanna take one card from the table \n"2" for more than one\n')
@@ -114,6 +117,7 @@ class Player:
 #/////////////Moves validation functions //////////////////////////////////////////////////////////////////////////
 
     def Take_valid(self):
+        self.suma = 0
         if self.action2 == '1':
             if type(self.table[self.position_table]) == list:
                 self.func_sum(self.table[self.position_table])
@@ -123,14 +127,13 @@ class Player:
                 if self.hand[self.position_player_hand][:-1] == self.table[self.position_table][:-1]:
                     self.valid = True
         else:
-            suma = 0
             for e in self.position_table:
                 e = int(e) - 1
                 if type(self.table[e]) == list:
                     self.func_sum(self.table[e])
                 else:
-                    suma += self.Specials_cards(self.table[e][:-1])
-            if suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.hand[self.position_player_hand][:-1], suma):
+                    self.suma += self.Specials_cards(self.table[e][:-1])
+            if self.suma == self.Specials_cards(self.hand[self.position_player_hand][:-1]) or self.Multiples(self.hand[self.position_player_hand][:-1], suma):
                 self.valid = True
                 
     
@@ -139,24 +142,24 @@ class Player:
             self.valid = True
 
     def Build_valid(self):
+        self.suma = 0
         if self.action2 == '1':
             if type(self.table[self.position_table]) == list:
                 self.func_sum(self.table[self.position_table])
                 self.suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
             else:
-                suma = self.Specials_cards(self.hand[self.position_player_hand][:-1]) + self.Specials_cards(self.table[self.position_table][:-1])
+                self.suma = self.Specials_cards(self.hand[self.position_player_hand][:-1]) + self.Specials_cards(self.table[self.position_table][:-1])
             for e in self.hand:
-                if suma == self.Specials_cards(e[:-1]) or self.Multiples(self.Specials_cards(e[:-1]), suma):
+                if self.suma == self.Specials_cards(e[:-1]) or self.Multiples(self.Specials_cards(e[:-1]), self.suma):
                     self.valid = True
         else:
-            suma = 0
             for e in self.position_table:
                 if type(e) != list:
-                    suma += self.Specials_cards(self.table[int(e)-1][:-1])
-            suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
+                    self.suma += self.Specials_cards(self.table[int(e)-1][:-1])
+            self.suma += self.Specials_cards(self.hand[self.position_player_hand][:-1])
 
             for e in self.hand:
-                if suma == self.Specials_cards(e[:-1]) or self.Multiples(self.Specials_cards(e[:-1]), suma):
+                if self.suma == self.Specials_cards(e[:-1]) or self.Multiples(self.Specials_cards(e[:-1]), self.suma):
                     self.valid = True
 
     def check_index(self):
@@ -186,19 +189,24 @@ class Player:
                 return True
 
     def func_sum(self, lst):
-        self.suma = 0
         for e in lst:
             self.suma += self.Specials_cards(e[:-1])
 
     def func_position(self):
+        aux_position_table = ''
+        aux_position_hand = ''
         if self.action2 == '1':
-            self.position_table = int(input('Card position from the table (e.g.: 2): ')) - 1
+            aux_position_table = self.Isnumeric(input('Card position from the table (e.g.: 2): '))
         elif self.action2 == '2':
-            self.position_table = input('Cards position from the table, separates by commas (e.g.: 2,3,4): ').split(',')
+            aux_position_table = self.Isnumeric(input('Cards position from the table, separates by commas (e.g.: 2,3,4): ').split(','))
         else:
             print('\nTry again\n')
             self.func_moves()
-        self.position_player_hand = int(input('Card position from your hand (e.g.: 2): ')) - 1
+
+        aux_position_hand = self.Isnumeric(input('Card position from your hand (e.g.: 2): '))
+        if aux_position_hand and aux_position_table:
+            self.position_table = aux_position_table
+            self.position_player_hand = aux_position_hand
 
     def func_aux_move_valid(self):
         if self.check_index():
@@ -206,7 +214,15 @@ class Player:
                 return True
             else:
                 print('\n\nInvalid move \n Try again\n\n')
-                self.func_moves()
+                self.Move(self.table)
         else:
             print('\nPosition out of range\nTry again\n')
-            self.func_moves()
+            self.Move(self.table)
+
+    def Isnumeric(self, element):
+        if type(element) == list:
+            return element
+        else:
+            if element.isnumeric():
+                return int(element) - 1
+        self.func_moves()

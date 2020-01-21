@@ -23,14 +23,14 @@ class Casino:
         input(self.Welcome.center(125, '-') + '\n \nPress Enter to continue :) ')
         self.deck = Poker_cards()
         self.players = self.play()
-        self.dealer = Dealer(self.deck.poker, self.players.players)
+        self.dealer = Dealer(self.deck.poker, self.players)
         self.table = []
         self.table_set_up()
         self.Game()
 
     def play(self):
         self.cant_players = input('\nEnter the number of Players: ')
-        players = []
+        self.players = []
         if self.input_valid(self.cant_players):
             if int(self.cant_players) >= 2 and int(self.cant_players) <= 4:
                 i = 1
@@ -38,9 +38,9 @@ class Casino:
                     print('\nPlayer ' + str(i))
                     player_name = self.Name_valid()
                     player_name = Player(player_name)
-                    players.append(player_name)
+                    self.players.append(player_name)
                     i += 1
-                return players
+                return self.players
             else:
                 print('\nInvalid value \nValid numbers (2-4)')
                 self.play()
@@ -67,8 +67,8 @@ class Casino:
             del self.deck.poker[-2:]
 
     def Game(self):
-        while self.players.players[-1].hand != []:
-            for player in self.players.players:
+        while self.players[-1].hand != []:
+            for player in self.players:
                 clear()
                 input(player.name + '\'s turn \nPress Enter to view your hand ')
                 clear()
@@ -90,7 +90,7 @@ class Casino:
             self.One_more()
 
     def end(self, winner):
-        for player in self.players.players:
+        for player in self.players:
             message = player.name + str(player.score)
             if player == winner:
                 message += ' WINNER!!!'
@@ -98,13 +98,13 @@ class Casino:
 
     def Remaining_cards(self):
         for i in range(len(self.players.players)-1, -1, -1):
-            player = self.players.players[i]
+            player = self.players[i]
             if player == 'take':
                 player.deck += self.table
 
     def One_more(self):
         one_more = True
-        for player in self.players.players:
+        for player in self.players:
             if player.score >= 21:
                 one_more = False
                 self.end(player)
