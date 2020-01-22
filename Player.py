@@ -34,9 +34,8 @@ class Player:
 
 #/////////////Moves' functions ////////////////////////////////////////////////////////////////////////////////
     def Drop_move(self):
-        input = input('Enter the card position that you wanna drop (e.g.: 2): ')
-        aux_position = self.Isnumeric(input)
-        if aux_position:
+        aux_position = self.Isnumeric(input('Enter the card position that you wanna drop (e.g.: 2): '))
+        if aux_position != None:
             self.position_player_hand = aux_position
             if self.check_index():
                 self.table.append(self.hand[self.position_player_hand])
@@ -47,7 +46,7 @@ class Player:
 
     def Take_move(self):
         self.action2 = input('Enter "1" if you wanna take one card from the table \n"2" for more than one\n')
-        self.func_position()
+        self.position_player_hand, self.position_table = self.func_position()
         if self.func_aux_move_valid():
             if self.action2 == '1':
                 # Add selected cards to  player's deck
@@ -59,7 +58,7 @@ class Player:
             elif self.action2 == '2':
                 for position_table in self.position_table:
                     self.deck.append(self.table[int(position_table) - 1])
-                    self.deck.append(self.hand[self.position_player_hand])
+                self.deck.append(self.hand[self.position_player_hand])
 
                 for i, position_table in enumerate(self.position_table):
                     self.table.pop(int(position_table) - (i + 1))
@@ -68,7 +67,7 @@ class Player:
 
     def Call_move(self):
         self.action2 = '1'
-        self.func_position()
+        self.position_player_hand, self.position_table = self.func_position()
         if self.func_aux_move_valid():
             #Create a group for easier adding
             self.group = [self.hand[self.position_player_hand], self.table[self.position_table]]
@@ -78,7 +77,7 @@ class Player:
 
     def Build_move(self):
         self.action2 = input('Enter "1" if you wanna build with one card from the table \n"2" for more than one\n')
-        self.func_position()
+        self.position_player_hand, self.position_table = self.func_position()
         if self.func_aux_move_valid():
             if self.action2 == '1':
                 if type(self.table[self.position_table]) == list:
@@ -204,9 +203,8 @@ class Player:
             self.func_moves()
 
         aux_position_hand = self.Isnumeric(input('Card position from your hand (e.g.: 2): '))
-        if aux_position_hand and aux_position_table:
-            self.position_table = aux_position_table
-            self.position_player_hand = aux_position_hand
+        if aux_position_hand != None and aux_position_table != None:
+            return aux_position_hand, aux_position_table
 
     def func_aux_move_valid(self):
         if self.check_index():

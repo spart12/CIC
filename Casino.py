@@ -97,7 +97,7 @@ class Casino:
             print(message)
 
     def Remaining_cards(self):
-        for i in range(len(self.players.players)-1, -1, -1):
+        for i in range(len(self.players)-1, -1, -1):
             player = self.players[i]
             if player == 'take':
                 player.deck += self.table
