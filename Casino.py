@@ -22,7 +22,7 @@ class Casino:
         self.Welcome = 'Welcome to Casino Game'
         input(self.Welcome.center(125, '-') + '\n \nPress Enter to continue :) ')
         self.deck = Poker_cards()
-        self.players = self.play()
+        self.play()
         self.dealer = Dealer(self.deck.poker, self.players)
         self.table = []
         self.table_set_up()
@@ -32,15 +32,16 @@ class Casino:
         self.cant_players = input('\nEnter the number of Players: ')
         self.players = []
         if self.input_valid(self.cant_players):
-            if int(self.cant_players) >= 2 and int(self.cant_players) <= 4:
+            self.cant_players = int(self.cant_players)
+            if self.cant_players >= 2 and self.cant_players <= 4:
                 i = 1
-                while i <= int(self.cant_players):
+                while i <= self.cant_players:
                     print('\nPlayer ' + str(i))
                     player_name = self.Name_valid()
-                    player_name = Player(player_name)
-                    self.players.append(player_name)
-                    i += 1
-                return self.players
+                    if player_name != None:
+                        player_name = Player(player_name)
+                        self.players.append(player_name)
+                        i += 1
             else:
                 print('\nInvalid value \nValid numbers (2-4)')
                 self.play()
@@ -54,7 +55,6 @@ class Casino:
             return self.name.capitalize()
         else:
             print('\nInvalid name\nTry again\n')
-            self.Name_valid()
 
     def input_valid(self, element):
         return element.isnumeric()
@@ -75,6 +75,7 @@ class Casino:
                 table = 'Cards in table: ' + str(self.table)
                 print(table + '\n' + player.name + '\'s hand: ' + str(player.hand) + '\n')
                 player.Move(self.table)
+                player.Pendient_someoneElse(self.players)
 
         if self.deck.poker != []:
             self.dealer.deal()
